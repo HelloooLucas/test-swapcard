@@ -1,10 +1,10 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
-const ArtistDetails:React.FC<RouteComponentProps> = props => {
+const ArtistDetails:React.FC<RouteComponentProps> = ({ history }) => {
     return (
         <>
-            <button onClick={props.history.goBack}>Back to list</button>
+            <button onClick={history.goBack}>Back to list</button>
             <div>Artist Details</div>
         </>
     );
