@@ -1,45 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import debounce from 'lodash.debounce';
 
 import { SearchBar } from './../components';
 
-interface Artist {
-    id: string;
-    name: string;
-}
-
-interface SearchResult {
-    search: {
-        artists: {
-            nodes: Artist[]
-        }
-    }
-};
-
-interface SearchArtistVars {
+interface HomeProps {
+    queryResponse: any;
+    debouncedSetQuery: (text: string) => void;
     query: string;
 };
 
-const SEARCH_ARTISTS = gql`
-    query Artists ($query: String!) {
-        search {
-            artists(query: $query) {
-                nodes {
-                    id
-                    name
-                }
-            }
-        }
-    }
-`;
-
-const Home:React.FC = () => {
-    const [query, setQuery] = useState('');
-    const debouncedSetQuery = useCallback(debounce(inputText => setQuery(inputText), 400), []);
-
-    const { loading, error, data } = useQuery<SearchResult, SearchArtistVars>(SEARCH_ARTISTS, { variables: { query }});
+const Home:React.FC<HomeProps> = ({ queryResponse, debouncedSetQuery, query }) => {
+    const { loading, error, data } = queryResponse;
     const artists = data?.search.artists.nodes;
 
     return (
