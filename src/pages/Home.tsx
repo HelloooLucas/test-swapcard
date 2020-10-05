@@ -1,6 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useQuery, gql } from '@apollo/client';
+import debounce from 'lodash.debounce';
+
+import { SearchBar } from './../components';
 
 interface Artist {
     id: string;
@@ -34,18 +37,15 @@ const SEARCH_ARTIST = gql`
 
 const Home:React.FC = () => {
     const [query, setQuery] = useState('');
+    const debouncedOnChange = useCallback(debounce(inputText => setQuery(inputText), 400), []);
+
     const { loading, error, data } = useQuery<SearchResult, SearchArtistVars>(SEARCH_ARTIST, { variables: { query }});
     const artists = data?.search.artists.nodes;
-    useEffect(() => console.log(artists))
 
     return (
         <>
             <h1>HOME</h1>
-            <input
-                type="text"
-                onChange={e => setQuery(e.target.value)}
-                value={query}
-            />
+            <SearchBar onChange={debouncedOnChange} />
             {!query
              ? <p>Please make a search</p>
              : loading
