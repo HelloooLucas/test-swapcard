@@ -1,11 +1,12 @@
 body {
-  display: flex;
-  height: 100vh;
+	display: flex;
+	height: 100vh;
+	font-family: 'Anonymous Pro', monospace;
 }
 
 #root {
-  width: calc(100vw - 40px);
-  height: calc(100vh - 40px);
-  border: 2px solid black;
-  margin: auto;
+	width: calc(100vw - 40px);
+	height: calc(100vh - 40px);
+	border: 2px solid black;
+	margin: auto;
 }

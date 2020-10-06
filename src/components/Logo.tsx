@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
     grid-area: logo;
+    font-size: 3rem;
     width: 100%;
     height: 100%;
     display: flex;

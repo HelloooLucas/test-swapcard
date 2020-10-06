@@ -17,7 +17,7 @@ const Layout = styled.div`
 	grid-template-columns: 100px 1fr;
 	grid-template-areas:
 	". logo"
-	"favorites content"
+	"favorites content";
 `;
 
 
@@ -32,14 +32,18 @@ const App: React.FC = () => {
 	const removeFavorite = (favToRemove: Artist) => setFavorites(prevFavorites => prevFavorites.filter(fav => fav.id !== favToRemove.id));
 
 	useEffect(() => {
+		console.log('GET STORAGE');
 		const localFavorites = window.localStorage.getItem('favorites') || '[]';
 		setFavorites(JSON.parse(localFavorites));
 	}, []);
 
 	useEffect(() => {
+		console.log('SET FAVORITES', favorites);
 		window.localStorage.setItem('favorites', JSON.stringify(favorites));
 	}, [favorites]);
 
+	useEffect(() => console.log('query ', query));
+	
     return (
 		<Layout>
 			<Logo />
