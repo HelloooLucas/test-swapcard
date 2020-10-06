@@ -17,9 +17,22 @@ const Wrapper = styled.div`
 	overflow: scroll;
 `;
 
+const BackButton = styled.button`
+    font-size: 100%;
+    font-family: inherit;
+    border: 0;
+    padding: 0;
+    background: none;
+    cursor: pointer;
+    margin-bottom: 15px;
+`;
+
 const ArtistName = styled.h1`
-    font-size: 1.6rem;
+    font-size: 2.4rem;
+    font-weight: 700;
     display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 15px;
 `;
 
 const FavPicto = styled.img`
@@ -37,7 +50,7 @@ const ArtistDetails:React.FC<ArtistDetailsProps> = ({ history, match, addFavorit
     
     return (
         <Wrapper>
-            <button onClick={history.goBack}>Back to list</button>
+            <BackButton onClick={history.goBack}>{'< Back to list'}</BackButton>
             {
                 loading
                 ? <p>Loading...</p>
