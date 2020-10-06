@@ -1,34 +1,31 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import debounce from 'lodash.debounce';
-import { useQuery, gql } from '@apollo/client';
+import styled from 'styled-components';
 
 import { Home, ArtistDetails } from "./pages";
-import { Favorites } from './components';
+import { Favorites, Logo } from './components';
 import { Artist } from './models/artist-models';
 import { SearchResult, SearchArtistVars } from './models/app-models';
+import { SEARCH_ARTISTS } from './queries';
 
-const SEARCH_ARTISTS = gql`
-    query Artists ($query: String!) {
-        search {
-            artists(query: $query) {
-                nodes {
-                    id
-					name
-					mediaWikiImages {
-						url
-					}
-                }
-            }
-        }
-    }
+const Layout = styled.div`
+	display: grid;
+	height: 100%;
+	grid-template-rows: 100px 1fr;
+	grid-template-columns: 100px 1fr;
+	grid-template-areas:
+	". logo"
+	"favorites content"
 `;
 
 
 const App: React.FC = () => {
 	const [favorites, setFavorites] = useState<Artist[]>([]);
-	const [query, setQuery] = useState('');
 
+	const [query, setQuery] = useState('');
+	const queryResponse = useQuery<SearchResult, SearchArtistVars>(SEARCH_ARTISTS, { variables: { query }});
 	const debouncedSetQuery = useCallback(debounce(inputText => setQuery(inputText), 400), []);
 
     const addFavorite = (newFav: Artist) => setFavorites(prevFavorites => [...prevFavorites, newFav]);
@@ -42,15 +39,16 @@ const App: React.FC = () => {
 	useEffect(() => {
 		window.localStorage.setItem('favorites', JSON.stringify(favorites));
 	}, [favorites]);
-	
-	const queryResponse = useQuery<SearchResult, SearchArtistVars>(SEARCH_ARTISTS, { variables: { query }});
 
     return (
-        <BrowserRouter>
-            <Route exact path='/' render={props => <Home {...props} queryResponse={queryResponse} debouncedSetQuery={debouncedSetQuery} query={query} />} />
-            <Route path='/artists/:id' render={props => <ArtistDetails {...props} addFavorite={addFavorite} removeFavorite={removeFavorite} favorites={favorites} />} />
-            <Favorites favorites={favorites} removeFavorite={removeFavorite} />
-        </BrowserRouter>
+		<Layout>
+			<Logo />
+			<BrowserRouter>
+				<Route exact path='/' render={props => <Home {...props} queryResponse={queryResponse} debouncedSetQuery={debouncedSetQuery} query={query} />} />
+				<Route path='/artists/:id' render={props => <ArtistDetails {...props} addFavorite={addFavorite} removeFavorite={removeFavorite} favorites={favorites} />} />
+			</BrowserRouter>
+			<Favorites favorites={favorites} removeFavorite={removeFavorite} />
+		</Layout>
     );
 }
 

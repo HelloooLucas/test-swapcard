@@ -1,30 +1,13 @@
 import React from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import styled from 'styled-components';
 
 import { Artist } from './../models/artist-models';
-import { ArtistDetailsProps } from '../models/artistDetails-models';
+import { ArtistDetailsProps } from '../models/artistdetails-models';
+import { FIND_ARTIST } from './../queries';
 
-const FIND_ARTIST = gql`
-    query SingleArtist ($id: ID!) {
-        node(id: $id) {
-            ...on Artist {
-                id
-                name
-                mediaWikiImages {
-                    url
-                }
-                releases {
-                    nodes {
-                        id
-                        title
-                        coverArtArchive {
-                            front
-                        }
-                    }
-                }
-            }
-        }
-    }
+const Wrapper = styled.div`
+    grid-area: content;
 `;
 
 
@@ -36,7 +19,7 @@ const ArtistDetails:React.FC<ArtistDetailsProps> = ({ history, match, addFavorit
     const isFavorite = artist && favorites.find((fav: Artist) => fav.id === artist.id);
     
     return (
-        <>
+        <Wrapper>
             <button onClick={history.goBack}>Back to list</button>
             <h3>Artist Details</h3>
             {
@@ -56,7 +39,7 @@ const ArtistDetails:React.FC<ArtistDetailsProps> = ({ history, match, addFavorit
                     </ul>
                 </div>
             }
-        </>
+        </Wrapper>
     );
 };
 
