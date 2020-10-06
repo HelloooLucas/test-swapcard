@@ -4,39 +4,9 @@ import debounce from 'lodash.debounce';
 import { useQuery, gql } from '@apollo/client';
 
 import { Home, ArtistDetails } from "./pages";
-
-interface Artist {
-    id: string;
-    name: string;
-    mediaWikiImages: [
-        {
-            url: string;
-        }
-    ]
-    releases?: {
-        nodes: [
-            {
-                id: string;
-                title: string;
-                coverArtArchive: {
-                    front: string;
-                }
-            }
-        ];
-    };
-};
-
-interface SearchResult {
-    search: {
-        artists: {
-            nodes: Artist[]
-        }
-    }
-};
-
-interface SearchArtistVars {
-    query: string;
-};
+import { Favorites } from './components';
+import { Artist } from './models/artist-models';
+import { SearchResult, SearchArtistVars } from './models/app-models';
 
 const SEARCH_ARTISTS = gql`
     query Artists ($query: String!) {
@@ -53,6 +23,7 @@ const SEARCH_ARTISTS = gql`
         }
     }
 `;
+
 
 const App: React.FC = () => {
 	const [favorites, setFavorites] = useState<Artist[]>([]);
@@ -76,11 +47,9 @@ const App: React.FC = () => {
 
     return (
         <BrowserRouter>
-          <Route exact path='/' render={props => <Home {...props} queryResponse={queryResponse} debouncedSetQuery={debouncedSetQuery} query={query} />} />
-          <Route path='/artists/:id' render={props => <ArtistDetails {...props} addFavorite={addFavorite} removeFavorite={removeFavorite} favorites={favorites} />} />
-		  <ul>
-			{favorites.map(fav => <li>{fav.name}</li>)}
-		  </ul>
+            <Route exact path='/' render={props => <Home {...props} queryResponse={queryResponse} debouncedSetQuery={debouncedSetQuery} query={query} />} />
+            <Route path='/artists/:id' render={props => <ArtistDetails {...props} addFavorite={addFavorite} removeFavorite={removeFavorite} favorites={favorites} />} />
+            <Favorites favorites={favorites} removeFavorite={removeFavorite} />
         </BrowserRouter>
     );
 }

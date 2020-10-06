@@ -1,37 +1,8 @@
 import React from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { RouteComponentProps } from 'react-router-dom';
 
-interface Artist {
-    id: string;
-    name: string;
-    mediaWikiImages: [
-        {
-            url: string;
-        }
-    ]
-    releases?: {
-        nodes: [
-            {
-                id: string;
-                title: string;
-                coverArtArchive: {
-                    front: string;
-                }
-            }
-        ];
-    };
-};
-
-interface MatchProp {
-    id: string;
-};
-
-interface ArtistDetailsProps extends RouteComponentProps<MatchProp> {
-    addFavorite: ((fav: Artist) => void);
-    removeFavorite: ((fav: Artist) => void);
-    favorites: Artist[];
-};
+import { Artist } from './../models/artist-models';
+import { ArtistDetailsProps } from '../models/artistDetails-models';
 
 const FIND_ARTIST = gql`
     query SingleArtist ($id: ID!) {
@@ -56,12 +27,13 @@ const FIND_ARTIST = gql`
     }
 `;
 
+
 const ArtistDetails:React.FC<ArtistDetailsProps> = ({ history, match, addFavorite, removeFavorite, favorites }) => {
     const artistId = match.params.id;
     const { loading, error, data } = useQuery(FIND_ARTIST, { variables: { id: artistId }})
     const artist = data?.node;
 
-    const isFavorite = artist && favorites.find(fav => fav.id === artist.id);
+    const isFavorite = artist && favorites.find((fav: Artist) => fav.id === artist.id);
     
     return (
         <>

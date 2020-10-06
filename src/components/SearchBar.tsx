@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-interface SearchBarProps {
-    onChange: (query: string) => void;
-};
+import { SearchBarProps } from './../models/searchbar-models';
+
 
 const SearchBar:React.FC<SearchBarProps> = ({ onChange }) => {
     const [inputText, setInputText] = useState('');

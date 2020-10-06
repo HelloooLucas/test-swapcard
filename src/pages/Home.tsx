@@ -2,12 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 import { SearchBar } from './../components';
+import { HomeProps } from './../models/home-models';
 
-interface HomeProps {
-    queryResponse: any;
-    debouncedSetQuery: (text: string) => void;
-    query: string;
-};
 
 const Home:React.FC<HomeProps> = ({ queryResponse, debouncedSetQuery, query }) => {
     const { loading, error, data } = queryResponse;
