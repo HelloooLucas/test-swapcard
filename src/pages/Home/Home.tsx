@@ -30,7 +30,7 @@ const Home:React.FC<HomeProps> = ({ queryResponse, debouncedSetQuery, query }) =
                     <NoResults data={artists} />
                     <ul>
                         {artists.map((artist: Artist) => (
-                            <StyledLink to={`/artists/${artist.id}`} key={artist.id}>
+                            <StyledLink to={`/artist/${artist.id}`} key={artist.id}>
                                 <ArtistElement artist={artist} />
                             </StyledLink>
                         ))}

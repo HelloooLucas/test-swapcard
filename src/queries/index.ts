@@ -38,3 +38,18 @@ export const FIND_ARTIST = gql`
         }
     }
 `;
+
+export const FIND_ALBUM = gql`
+    query SingleAlbum($id: ID!) {
+        node(id: $id) {
+            ... on Release {
+                id
+                title
+                date
+                coverArtArchive {
+                    front
+                }
+            }
+        }
+    }
+`;

@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 
 export const Wrapper = styled.div`
     grid-area: content;
@@ -20,16 +19,14 @@ export const BackButton = styled.button`
     margin-bottom: 60px;
 `;
 
-export const ArtistName = styled.h1`
+export const AlbumName = styled.h1`
     font-size: 2.4rem;
     font-weight: 700;
-    display: inline-block;
     margin-right: 8px;
     margin-bottom: 30px;
 `;
 
-export const StyledLink = styled(NavLink)`
-    display: block;
-    width: 400px;
-    margin-bottom: 15px;
+export const CoverPicture = styled.img`
+    width: 300px;
+    object-fit: cover;
 `;

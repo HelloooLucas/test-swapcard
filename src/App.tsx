@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { Home, ArtistDetails } from "./pages";
+import { Home, ArtistDetails, AlbumDetails } from "./pages";
 import { Favorites, Logo } from './components';
 import { Artist } from './models/artist.model';
 import { SearchResult, SearchArtistVars } from './models/app.model';
@@ -47,7 +47,8 @@ const App: React.FC = () => {
 			<Logo />
 			<BrowserRouter>
 				<Route exact path='/' render={props => <Home {...props} queryResponse={queryResponse} debouncedSetQuery={debouncedSetQuery} query={query} />} />
-				<Route path='/artists/:id' render={props => <ArtistDetails {...props} addFavorite={addFavorite} removeFavorite={removeFavorite} favorites={favorites} />} />
+				<Route path='/artist/:id' render={props => <ArtistDetails {...props} addFavorite={addFavorite} removeFavorite={removeFavorite} favorites={favorites} />} />
+				<Route path='/album/:id' component={AlbumDetails} />
 			</BrowserRouter>
 			<Favorites favorites={favorites} removeFavorite={removeFavorite} />
 			<ToastContainer

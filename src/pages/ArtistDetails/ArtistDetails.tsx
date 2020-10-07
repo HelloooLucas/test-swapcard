@@ -6,7 +6,7 @@ import { FIND_ARTIST } from '../../queries';
 import { Artist } from '../../models/artist.model';
 import { Loading, Error, NoResults } from '../../components';
 import { FavoriteStar, ReleaseElement } from './subcomponents';
-import { Wrapper, BackButton, ArtistName } from './styles';
+import { Wrapper, BackButton, ArtistName, StyledLink } from './styles';
 
 
 export interface MatchProp {
@@ -35,14 +35,18 @@ const ArtistDetails:React.FC<ArtistDetailsProps> = ({ history, match, addFavorit
             {artist && (
                 <>
                     <NoResults data={artist.releases.nodes} />
-                    <ArtistName>{artist.name}</ArtistName>
+                    <ArtistName>Albums by {artist.name}</ArtistName>
                     <FavoriteStar
                         isFavorite={isFavorite}
                         handleClick={isFavorite ? removeFavorite : addFavorite}
                         artist={artist}
                     />
                     <ul>
-                        {artist.releases.nodes.map((release: any) => <ReleaseElement key={release.id} release={release} />)}
+                        {artist.releases.nodes.map((release: any) => (
+                            <StyledLink to={`/album/${release.id}`} key={release.id}>
+                                <ReleaseElement release={release} />
+                            </StyledLink>
+                        ))}
                     </ul>
                 </>
             )}
