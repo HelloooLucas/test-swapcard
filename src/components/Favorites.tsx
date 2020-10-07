@@ -1,7 +1,8 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
-import { FavoritesProps } from './../models/favorites-models';
+import { Artist } from './../models/artist.model';
 
 const Wrapper = styled.div`
     grid-area: favorites;
@@ -24,8 +25,17 @@ const ListItem = styled.li`
     }
 `;
 
+interface FavoritesProps {
+    favorites: Artist[];
+    removeFavorite: (fav: Artist) => void;
+};
+
 
 const Favorites: React.FC<FavoritesProps> = ({ favorites, removeFavorite }) => {
+    const clickAndToast = (fav: Artist) => {
+        removeFavorite(fav);
+        toast.error(fav.name + ' was removed from your favorites!');
+    }
     return (
         <Wrapper>
             <Title>Favorites</Title>
@@ -33,7 +43,7 @@ const Favorites: React.FC<FavoritesProps> = ({ favorites, removeFavorite }) => {
                 {favorites.map(fav => (
                     <ListItem
                         key={fav.id}
-                        onClick={() => removeFavorite(fav)}
+                        onClick={() => clickAndToast(fav)}
                     >
                         {fav.name}
                     </ListItem>

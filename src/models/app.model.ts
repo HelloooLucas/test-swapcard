@@ -1,4 +1,4 @@
-import { Artist } from './artist-models';
+import { Artist } from './artist.model';
 
 export interface SearchResult {
     search: {

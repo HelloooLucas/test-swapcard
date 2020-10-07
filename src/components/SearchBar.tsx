@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import { SearchBarProps } from './../models/searchbar-models';
-
 const SearchInput = styled.input`
     margin-bottom: 30px;
     font-size: 1.2rem;
 `;
+
+export interface SearchBarProps {
+    onChange: (query: string) => void;
+};
 
 
 const SearchBar:React.FC<SearchBarProps> = ({ onChange }) => {

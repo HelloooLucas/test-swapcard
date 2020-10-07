@@ -1,2 +1,2 @@
-export { default as Home } from './Home';
-export { default as ArtistDetails } from './ArtistDetails';
+export { default as Home } from './Home/Home';
+export { default as ArtistDetails } from './ArtistDetails/ArtistDetails';

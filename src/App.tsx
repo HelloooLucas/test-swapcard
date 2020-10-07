@@ -3,11 +3,13 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import debounce from 'lodash.debounce';
 import styled from 'styled-components';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { Home, ArtistDetails } from "./pages";
 import { Favorites, Logo } from './components';
-import { Artist } from './models/artist-models';
-import { SearchResult, SearchArtistVars } from './models/app-models';
+import { Artist } from './models/artist.model';
+import { SearchResult, SearchArtistVars } from './models/app.model';
 import { SEARCH_ARTISTS } from './queries';
 
 const Layout = styled.div`
@@ -32,17 +34,13 @@ const App: React.FC = () => {
 	const removeFavorite = (favToRemove: Artist) => setFavorites(prevFavorites => prevFavorites.filter(fav => fav.id !== favToRemove.id));
 
 	useEffect(() => {
-		console.log('GET STORAGE');
 		const localFavorites = window.localStorage.getItem('favorites') || '[]';
 		setFavorites(JSON.parse(localFavorites));
 	}, []);
 
 	useEffect(() => {
-		console.log('SET FAVORITES', favorites);
 		window.localStorage.setItem('favorites', JSON.stringify(favorites));
 	}, [favorites]);
-
-	useEffect(() => console.log('query ', query));
 	
     return (
 		<Layout>
@@ -52,6 +50,10 @@ const App: React.FC = () => {
 				<Route path='/artists/:id' render={props => <ArtistDetails {...props} addFavorite={addFavorite} removeFavorite={removeFavorite} favorites={favorites} />} />
 			</BrowserRouter>
 			<Favorites favorites={favorites} removeFavorite={removeFavorite} />
+			<ToastContainer
+				position="bottom-right"
+				autoClose={3000}
+			/>
 		</Layout>
     );
 }
