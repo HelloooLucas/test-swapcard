@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const SearchInput = styled.input`
@@ -7,21 +7,23 @@ const SearchInput = styled.input`
 `;
 
 export interface SearchBarProps {
-    onChange: (query: string) => void;
+    debouncedSetQuery: (query: string) => void;
 };
 
 
-const SearchBar:React.FC<SearchBarProps> = ({ onChange }) => {
+const SearchBar:React.FC<SearchBarProps> = ({ debouncedSetQuery }) => {
     const [inputText, setInputText] = useState('');
 
-    useEffect(() => {
-        onChange(inputText)
-    });
+    const handleChange = (e: React.ChangeEvent) => {
+        const target = e.target as HTMLInputElement;
+        setInputText(target.value);
+        debouncedSetQuery(target.value);
+    }
 
     return (
         <SearchInput
             type="text"
-            onChange={e => setInputText(e.target.value)}
+            onChange={handleChange}
             value={inputText}
             placeholder="Type an artist..."
         />
