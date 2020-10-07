@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useLazyQuery } from '@apollo/client';
 import debounce from 'lodash.debounce';
 import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
@@ -27,12 +27,16 @@ const App: React.FC = () => {
 	const [favorites, setFavorites] = useState<Artist[]>([]);
 
 	const [query, setQuery] = useState('');
-	const queryResponse = useQuery<SearchResult, SearchArtistVars>(SEARCH_ARTISTS, { variables: { query }});
+	const [searchArtists, queryResponse] = useLazyQuery<SearchResult, SearchArtistVars>(SEARCH_ARTISTS, { variables: { query }});
 	const debouncedSetQuery = useCallback(debounce(inputText => setQuery(inputText), 400), []);
 
     const addFavorite = (newFav: Artist) => setFavorites(prevFavorites => [...prevFavorites, newFav]);
 	const removeFavorite = (favToRemove: Artist) => setFavorites(prevFavorites => prevFavorites.filter(fav => fav.id !== favToRemove.id));
 
+	useEffect(() => {
+		query && searchArtists();
+	}, [query, searchArtists]);
+	
 	useEffect(() => {
 		const localFavorites = window.localStorage.getItem('favorites') || '[]';
 		setFavorites(JSON.parse(localFavorites));

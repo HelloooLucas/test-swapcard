@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { SearchBar, Loading, Error, NoResults } from './../../components';
-import { ArtistElement } from './subcomponents';
+import { SearchBar, NoResults } from './../../components';
+import { ArtistElement, LoadingStatus } from './subcomponents';
 import { Artist } from './../../models/artist.model';
 import { Wrapper, StyledLink } from './styles';
 
@@ -14,16 +14,14 @@ interface HomeProps {
 
 
 const Home:React.FC<HomeProps> = ({ queryResponse, debouncedSetQuery, query }) => {
-    const { loading, error, data } = queryResponse;
+    const { data } = queryResponse;
+    console.log(data)
     const artists = data?.search.artists.nodes;
 
     return (
         <Wrapper>
             <SearchBar debouncedSetQuery={debouncedSetQuery} />
-
-            {!query ? <p>Please make a search</p> : ''}
-            {query ? <Loading loading={loading} /> : ''}
-            {query && !loading ? <Error error={!!error} /> : ''}
+            <LoadingStatus query={query} queryResponse={queryResponse} />
 
             {artists && (
                 <>
