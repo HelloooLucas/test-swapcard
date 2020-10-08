@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 interface LoadingProps {
-    loading: boolean;
-};
+	loading: boolean;
+}
 
-const Loading:React.FC<LoadingProps> = ({ loading }) => <p>{loading ? 'Loading...' : ''}</p>;
+const Loading: FC<LoadingProps> = ({ loading }) => (
+	<p>{loading ? 'Loading...' : ''}</p>
+);
 
 export default Loading;

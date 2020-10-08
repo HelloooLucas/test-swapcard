@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 interface NoResultProps {
-    data: any[];
-};
+	data: any[];
+}
 
-const NoResult:React.FC<NoResultProps> = ({ data }) => <p>{!data.length ? 'No results :o' : ''}</p>;
+const NoResult: FC<NoResultProps> = ({ data }) => (
+	<p>{!data.length ? 'No results :o' : ''}</p>
+);
 
 export default NoResult;

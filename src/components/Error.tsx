@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 
 interface ErrorProps {
-    error: boolean;
-};
+	error: boolean;
+}
 
-const Error:React.FC<ErrorProps> = ({ error }) => <p>{error ? 'Error :(': ''}</p>;
+const Error: FC<ErrorProps> = ({ error }) => <p>{error ? 'Error :(' : ''}</p>;
 
 export default Error;
