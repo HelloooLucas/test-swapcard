@@ -18,6 +18,7 @@ export const BackButton = styled.button`
 	background: none;
 	cursor: pointer;
 	margin-bottom: 60px;
+	display: block;
 `;
 
 export const ArtistName = styled.h1`

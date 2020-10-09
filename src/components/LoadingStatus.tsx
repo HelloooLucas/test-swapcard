@@ -1,9 +1,15 @@
 import React from 'react';
+import { ApolloError } from '@apollo/client';
+import { Artist, Release } from './../models/artist.model';
 
 interface Props {
-	queryResponse: any;
+	queryResponse: {
+		loading: boolean;
+		error?: ApolloError | undefined;
+		data: any; // Not very proud of this one, but didn't know how to type it
+	};
 	query?: string;
-	data?: any[];
+	data?: Artist[] | Release[];
 }
 
 const LoadingStatus: (props: Props) => JSX.Element | null = ({
