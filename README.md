@@ -1,3 +1,7 @@
+This project is hosted on Netlify and can be visited [here](https://swapsound.netlify.app/)!
+
+-
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
