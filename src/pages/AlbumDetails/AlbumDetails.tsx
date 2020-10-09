@@ -15,6 +15,7 @@ interface Props extends RouteComponentProps<MatchProp> {}
 
 const AlbumDetails: FC<Props> = ({ match, history }) => {
 	const albumId = match.params.id;
+
 	const queryResponse = useQuery(FIND_ALBUM, {
 		variables: { id: albumId },
 	});

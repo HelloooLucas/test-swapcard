@@ -1,2 +1,2 @@
-export { default as ReleaseElement } from './ReleaseElement';
-export { default as FavoriteStar } from './FavoriteStar';
+export { default as ReleaseElement } from './ReleaseElement/ReleaseElement';
+export { default as FavoritesStar } from './FavoritesStar/FavoritesStar';

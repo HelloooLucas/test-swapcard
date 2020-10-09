@@ -7,16 +7,18 @@ import { Wrapper, Title, ListItem } from './styles';
 
 const Favorites: FC = () => {
 	const { favorites, removeFavorite } = useContext(favoritesContext);
-	const clickAndToast = (fav: Artist) => {
+
+	const handleClick = (fav: Artist) => {
 		removeFavorite(fav);
 		toast.error(fav.name + ' was removed from your favorites!');
 	};
+
 	return (
 		<Wrapper>
 			<Title>Favorites</Title>
 			<ul>
 				{favorites.map(fav => (
-					<ListItem key={fav.id} onClick={() => clickAndToast(fav)}>
+					<ListItem key={fav.id} onClick={() => handleClick(fav)}>
 						{fav.name}
 					</ListItem>
 				))}

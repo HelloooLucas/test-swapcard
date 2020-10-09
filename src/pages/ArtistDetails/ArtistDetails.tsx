@@ -1,13 +1,12 @@
-import React, { FC, useContext } from 'react';
+import React, { FC } from 'react';
 import { useQuery } from '@apollo/client';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { FIND_ARTIST } from '../../queries';
-import { Artist, Release } from '../../models/artist.model';
+import { Release } from '../../models/artist.model';
 import { LoadingStatus } from '../../components';
-import { FavoriteStar, ReleaseElement } from './subcomponents';
+import { FavoritesStar, ReleaseElement } from './subcomponents';
 import { Wrapper, BackButton, ArtistName, StyledLink } from './styles';
-import { favoritesContext } from '../../contexts';
 
 export interface MatchProp {
 	id: string;
@@ -16,17 +15,11 @@ export interface MatchProp {
 interface Props extends RouteComponentProps<MatchProp> {}
 
 const ArtistDetails: FC<Props> = ({ history, match }) => {
-	const { favorites, addFavorite, removeFavorite } = useContext(
-		favoritesContext
-	);
 	const artistId = match.params.id;
 	const queryResponse = useQuery(FIND_ARTIST, {
 		variables: { id: artistId },
 	});
 	const artist = queryResponse.data?.node;
-
-	const isFavorite =
-		artist && !!favorites.find((fav: Artist) => fav.id === artist.id);
 
 	return (
 		<Wrapper>
@@ -38,11 +31,7 @@ const ArtistDetails: FC<Props> = ({ history, match }) => {
 			{artist && (
 				<>
 					<ArtistName>Albums by {artist.name}</ArtistName>
-					<FavoriteStar
-						isFavorite={isFavorite}
-						handleClick={isFavorite ? removeFavorite : addFavorite}
-						artist={artist}
-					/>
+					<FavoritesStar artist={artist} />
 					<ul>
 						{artist.releases.nodes.map((release: Release) => (
 							<StyledLink
