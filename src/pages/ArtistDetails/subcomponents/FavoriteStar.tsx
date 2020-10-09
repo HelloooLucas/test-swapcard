@@ -12,17 +12,13 @@ const FavPicto = styled.img`
 	cursor: pointer;
 `;
 
-interface FavoriteStarProps {
+interface Props {
 	isFavorite: boolean;
 	handleClick: (fav: Artist) => void;
 	artist: Artist;
 }
 
-const FavoriteStar: FC<FavoriteStarProps> = ({
-	isFavorite,
-	handleClick,
-	artist,
-}) => {
+const FavoriteStar: FC<Props> = ({ isFavorite, handleClick, artist }) => {
 	const picto = isFavorite ? starFull : starEmpty;
 	const clickAndToast = () => {
 		handleClick(artist);

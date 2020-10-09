@@ -17,11 +17,11 @@ const Picture = styled.img`
 	margin-right: 15px;
 `;
 
-interface ArtistElementProps {
+interface Props {
 	artist: Artist;
 }
 
-const ArtistElement: FC<ArtistElementProps> = ({ artist }) => {
+const ArtistElement: FC<Props> = ({ artist }) => {
 	const imgUrl = artist.mediaWikiImages[0]?.url || noImage;
 	return (
 		<ArtistBlock>

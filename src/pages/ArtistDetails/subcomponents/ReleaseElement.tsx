@@ -18,11 +18,11 @@ const Picture = styled.img`
 	margin-right: 15px;
 `;
 
-interface ReleaseElementProps {
+interface Props {
 	release: Release;
 }
 
-const ReleaseElement: FC<ReleaseElementProps> = ({ release }) => {
+const ReleaseElement: FC<Props> = ({ release }) => {
 	const imgUrl = release.coverArtArchive.front || noImage;
 	return (
 		<ReleaseBlock>

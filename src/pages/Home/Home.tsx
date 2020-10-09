@@ -1,7 +1,7 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
-import { SearchBar, NoResults } from './../../components';
-import { ArtistElement, LoadingStatus } from './subcomponents';
+import { SearchBar, LoadingStatus } from './../../components';
+import { ArtistElement } from './subcomponents';
 import { Artist } from './../../models/artist.model';
 import { Wrapper, StyledLink } from './styles';
 import { useLazyQuery } from '@apollo/client';
@@ -32,22 +32,20 @@ const Home: FC = () => {
 	return (
 		<Wrapper>
 			<SearchBar debouncedSetQuery={debouncedSetQuery} />
-			<LoadingStatus query={query} queryResponse={queryResponse} />
+			<LoadingStatus
+				query={query}
+				queryResponse={queryResponse}
+				data={artists}
+			/>
 
 			{artists && (
-				<>
-					<NoResults data={artists} />
-					<ul>
-						{artists.map((artist: Artist) => (
-							<StyledLink
-								to={`/artist/${artist.id}`}
-								key={artist.id}
-							>
-								<ArtistElement artist={artist} />
-							</StyledLink>
-						))}
-					</ul>
-				</>
+				<ul>
+					{artists.map((artist: Artist) => (
+						<StyledLink to={`/artist/${artist.id}`} key={artist.id}>
+							<ArtistElement artist={artist} />
+						</StyledLink>
+					))}
+				</ul>
 			)}
 		</Wrapper>
 	);

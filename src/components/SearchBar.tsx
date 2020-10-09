@@ -17,11 +17,11 @@ const BackButton = styled.button`
 	margin-bottom: 60px;
 `;
 
-export interface SearchBarProps {
+export interface Props {
 	debouncedSetQuery: (query: string) => void;
 }
 
-const SearchBar: FC<SearchBarProps> = ({ debouncedSetQuery }) => {
+const SearchBar: FC<Props> = ({ debouncedSetQuery }) => {
 	const [inputText, setInputText] = useState('');
 
 	const handleChange = (e: React.ChangeEvent) => {
