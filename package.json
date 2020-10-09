@@ -4,10 +4,6 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.2.2",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/lodash": "^4.14.161",
     "graphql": "^15.3.0",
     "lodash": "^4.17.20",
     "react": "^16.13.1",
@@ -42,6 +38,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.14",
+    "@types/lodash": "^4.14.161",
     "@types/node": "^14.11.5",
     "@types/react": "^16.9.51",
     "@types/react-dom": "^16.9.8",

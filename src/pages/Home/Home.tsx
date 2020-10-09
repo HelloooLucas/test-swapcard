@@ -1,19 +1,33 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 
 import { SearchBar, NoResults } from './../../components';
 import { ArtistElement, LoadingStatus } from './subcomponents';
 import { Artist } from './../../models/artist.model';
 import { Wrapper, StyledLink } from './styles';
+import { useLazyQuery } from '@apollo/client';
+import { SearchResult, SearchArtistVars } from '../../models/app.model';
+import { SEARCH_ARTISTS } from '../../queries';
 
-interface HomeProps {
-	queryResponse: any;
-	debouncedSetQuery: (text: string) => void;
-	query: string;
-}
+const debounce = require('lodash/debounce'); // Tree shaking
 
-const Home: FC<HomeProps> = ({ queryResponse, debouncedSetQuery, query }) => {
-	const { data } = queryResponse;
-	const artists = data?.search.artists.nodes;
+const Home: FC = () => {
+	const [query, setQuery] = useState('');
+
+	const [searchArtists, queryResponse] = useLazyQuery<
+		SearchResult,
+		SearchArtistVars
+	>(SEARCH_ARTISTS, { variables: { query } });
+
+	const debouncedSetQuery = debounce(
+		(inputText: string) => setQuery(inputText),
+		400
+	);
+
+	useEffect(() => {
+		query && searchArtists();
+	}, [query, searchArtists]);
+
+	const artists = queryResponse.data?.search.artists.nodes;
 
 	return (
 		<Wrapper>

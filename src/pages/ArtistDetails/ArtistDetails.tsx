@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { useQuery } from '@apollo/client';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -7,24 +7,18 @@ import { Artist } from '../../models/artist.model';
 import { Loading, Error, NoResults } from '../../components';
 import { FavoriteStar, ReleaseElement } from './subcomponents';
 import { Wrapper, BackButton, ArtistName, StyledLink } from './styles';
+import { favoritesContext } from '../../contexts';
 
 export interface MatchProp {
 	id: string;
 }
 
-interface ArtistDetailsProps extends RouteComponentProps<MatchProp> {
-	addFavorite: (fav: Artist) => void;
-	removeFavorite: (fav: Artist) => void;
-	favorites: Artist[];
-}
+interface ArtistDetailsProps extends RouteComponentProps<MatchProp> {}
 
-const ArtistDetails: FC<ArtistDetailsProps> = ({
-	history,
-	match,
-	addFavorite,
-	removeFavorite,
-	favorites,
-}) => {
+const ArtistDetails: FC<ArtistDetailsProps> = ({ history, match }) => {
+	const { favorites, addFavorite, removeFavorite } = useContext(
+		favoritesContext
+	);
 	const artistId = match.params.id;
 	const { loading, error, data } = useQuery(FIND_ARTIST, {
 		variables: { id: artistId },
@@ -36,7 +30,7 @@ const ArtistDetails: FC<ArtistDetailsProps> = ({
 
 	return (
 		<Wrapper>
-			<BackButton onClick={history.goBack}>{'< Back to list'}</BackButton>
+			<BackButton onClick={history.goBack}>{'< Back to Home'}</BackButton>
 			<Loading loading={loading} />
 			<Error error={!!error} />
 			{artist && (

@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
+import { favoritesContext } from '../contexts';
 
 import { Artist } from './../models/artist.model';
 
@@ -25,12 +26,8 @@ const ListItem = styled.li`
 	}
 `;
 
-interface FavoritesProps {
-	favorites: Artist[];
-	removeFavorite: (fav: Artist) => void;
-}
-
-const Favorites: FC<FavoritesProps> = ({ favorites, removeFavorite }) => {
+const Favorites: FC = () => {
+	const { favorites, removeFavorite } = useContext(favoritesContext);
 	const clickAndToast = (fav: Artist) => {
 		removeFavorite(fav);
 		toast.error(fav.name + ' was removed from your favorites!');
